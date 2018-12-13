@@ -2,6 +2,13 @@
 * {
     margin: 0;
 }
+p {
+    margin-bottom: 10px;
+}
+h1 {
+    margin-top: 100px;
+    text-align: center;
+}
 
 /* Map */
 #map, #planet {
@@ -21,8 +28,10 @@
 #planet {
     display: none;
 }
-span[class^="lexia"] {
-    color: #011a76;
+
+/* Lexias */
+span[class^="lexia"] { /* targets the links in the lexias */
+    color: white;
     text-decoration: underline;
     cursor: pointer;
 }

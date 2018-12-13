@@ -20,12 +20,34 @@
 </script>
 <script type="text/javascript">
     // data constants
-    var planets = [{
-        name:'green',
-        colorLow:'#92A439',
-        colorHigh:'#2A7750'
-    }];
-    const lexiaParts = ['lexia-start', 'lexia-a', 'lexia-b', 'lexia-end'];
+    const planets = [
+        {
+            name:'green',
+            colorLow:'#92A439',
+            colorHigh:'#2A7750'
+        },{
+            name:'red',
+            colorLow:'#AA5939',
+            colorHigh:'#983352'
+        },{
+            name:'purple',
+            colorLow:'#6F256F',
+            colorHigh:'#4B2D73'
+        },{
+            name:'blue',
+            colorLow:'#294F6D',
+            colorHigh:'#343477'
+        },{
+            name:'orange',
+            colorLow:'#AA7939',
+            colorHigh:'#AA5939'
+        },{
+            name:'gold',
+            colorLow:'#AAA039',
+            colorHigh:'#91A437'
+        }
+    ];
+    const lexiaParts = ['lexia-start', 'lexia-a', 'lexia-b', 'lexia-end', 'lexia-bad'];
     /*
     var lexias = [{
         name: 'green',
@@ -39,48 +61,62 @@
     // player progress
     var currPlanet = "green";
     var currLexia = "lexia-start";
-    var nextLexia = null;
 
     // Runs on DOM ready
     function autorun()
     {
         console.log("The application has started properly.");
         // set the initial background image
-        setBackground(1);
+        setMapImage(0);
     }
 
     // changes the background image
-    function setBackground(mapNum) {
+    function setMapImage(mapNum) {
         document.getElementById('map').getElementsByTagName('img')[0].src= 'assets/imgs/map'+ mapNum +'.jpg';
+    }
+
+    // returns the user to the map
+    function goToMap() {
+        // show the map
+        document.getElementById("map").style.display = 'block';
+        // hide the planet
+        document.getElementById("planet").style.display = 'none';
     }
 
     // triggered when the user clicks the map
     function goToNextPlanet() {
         var map = document.getElementById("map");
         var planet = document.getElementById("planet");
-        //map.style.visibility = 'hidden';
+
+        //hide the map
         map.style.display = 'none';
-        planet.style.display = 'block';
+
         // starts the background animation
         sweepRepeat(planet, planets[0].colorLow, planets[0].colorHigh); // sweep background color for green planet
-        getNextLexia();
-    }
 
-    // called when the user clicks a link in a lexia
-    function clickLexia(nextLex) {
-        getNextLexia(nextLex)
+        // shows the starting lexia
+        getNextLexia("lexia-start");
     }
 
     // picks the next correct lexia
     function getNextLexia(nextLex) {
+        // update lexia trackers
+        currLexia = nextLex;
+
+        // remove old div and css
+        $("#planet").remove();
+        $("#hide-lexias-css").remove();
+
+        // add it back
+        var planet = document.createElement("div");
+        planet.setAttribute("id", "planet");
+        document.getElementById("planet-wrapper").appendChild(planet);
+
+        // load the lexias into the wrapper
         $("#planet").load("lexias/" + currPlanet + ".html");
 
-        $(function(){
-            onlyShowThisLexia(currLexia);
-
-            var lexia = document.getElementById(currLexia); // .style.display = 'block';
-            console.log(lexia);
-        });
+        // hide all lexias except the current one
+        onlyShowThisLexia(nextLex);
     }
 
     // hides all lexias except for the one provided
@@ -91,20 +127,37 @@
 
         var lexiaStr = "";
         lexiasToHide.forEach(function(lex) {
-           lexiaStr += (lex + ", ");
+           lexiaStr += ("#" + lex + ", ");
         });
-        lexiaStr = lexiaStr.substr(0, lexiaStr.length - 2) + " { display: none }";
+        lexiaStr = lexiaStr.substr(0, lexiaStr.length - 2) + " { display: none; } #planet { display: block; }";
         console.log("use this css: " + lexiaStr);
 
         var css = document.createElement("style");
         css.type = "text/css";
+        css.id = "hide-lexias-css";
         css.innerHTML = lexiaStr;
         document.head.appendChild(css);
+        // document.getElementById("planet").appendChild(css);
     }
 
-    // shows a lexia on the page
-    function displayLexia(lexia) {
+    // called when the user clicks a link in a lexia
+    function clickLexia(nextLex) {
+        // if the user clicks to go back to the map
+        if (nextLex === "lexia-back") {
+            // find next planet's index
+            var nextIndex = planets.map(function(x) {return x.name; }).indexOf(currPlanet) + 1;
+            nextIndex = (nextIndex >= planets.length) ? nextIndex -1 : nextIndex; // make sure it doesn't break after completing last planet
 
+            // assign the next planet
+            currPlanet = planets[nextIndex].name;
+            setMapImage(nextIndex);
+            // go to the planet
+            goToMap();
+        }
+        // if the user clicks a link between lexias
+        else {
+            getNextLexia(nextLex);
+        }
     }
 
     // loops background color (not working)
