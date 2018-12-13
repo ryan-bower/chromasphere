@@ -17,6 +17,8 @@ h1 {
     overflow: hidden;
     margin: 0;
     position: relative;
+}
+#map {
     background-color: #011a76;
 }
 #map img {
