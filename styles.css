@@ -2,13 +2,6 @@
 * {
     margin: 0;
 }
-p {
-    margin-bottom: 10px;
-}
-h1 {
-    margin-top: 100px;
-    text-align: center;
-}
 
 /* Map */
 #map, #planet {
@@ -31,9 +24,23 @@ h1 {
     display: none;
 }
 
-/* Lexias */
-span[class^="lexia"] { /* targets the links in the lexias */
+/* Lexias
+span[class^="lexia"] { /* targets the links in the lexias *//*
     color: white;
     text-decoration: underline;
     cursor: pointer;
+}
+*/
+
+/* TODO: Remove after Youki's style changes are made */
+/* simulates one lexia showing (as it does when used in the application)*/
+#lexia-a, #lexia-b, #lexia-end, #lexia-bad {
+    display: none;
+}
+
+/* Youki: START STYLING HERE */
+
+
+span[class^="lexia"] { /* this targets the links in the lexias */
+
 }
