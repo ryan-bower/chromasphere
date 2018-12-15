@@ -6,13 +6,13 @@
 /* Map */
 #map, #planet {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     margin: 0;
     position: relative;
 }
 #map {
-    background-color: #011a76;
+    background-color: #070932;
 }
 #map img {
     position:absolute;
@@ -23,6 +23,9 @@
 #planet {
     display: none;
 }
+#container {
+    margin-bottom: 200px;
+}
 
 /* Lexias
 span[class^="lexia"] { /* targets the links in the lexias *//*
@@ -31,16 +34,47 @@ span[class^="lexia"] { /* targets the links in the lexias *//*
     cursor: pointer;
 }
 */
-
-/* TODO: Remove after Youki's style changes are made */
-/* simulates one lexia showing (as it does when used in the application)*/
-#lexia-a, #lexia-b, #lexia-end, #lexia-bad {
-    display: none;
+/* Youki Lexia Styles */
+h1 {
+    font-family: 'Major Mono Display', monospace;
+    text-align: center;
+    font-size: 4em;
+    margin-top: 50px;
+}
+p {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 25%;
+    padding-right: 25%;
+    font-size: 1.25em;
+    padding-top: 1em;
+    color: black;
+}
+/* this targets the links in the lexias */
+span.lexia-link {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-/* Youki: START STYLING HERE */
+span.lexia-link:hover{
+    color: rebeccapurple;
+}
 
+.lexia-back {
+    border: 1px solid black;
+    font-family: 'Major Mono Display', monospace;
+    font-size: 1.25em;
+    padding: .25em .5em;
+    border-radius: 10px;
+    background-color: #0F1A41;
+    display: block;
+    width: 250px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
 
-span[class^="lexia"] { /* this targets the links in the lexias */
-
+.lexia-back:active {
+    background-color: white;
 }
